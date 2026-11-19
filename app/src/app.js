@@ -314,9 +314,10 @@ function paintGradeWash(ctx, w, h) {
 }
 
 function paintSunDisc(ctx, w, h) {
-  // Straddling the hero/side-panel seam, so it never sits on a face.
+  // Centred inside the hero panel, ending at the side-panel seam,
+  // so it never sits on a panel tag or a face.
   var r = Math.min(w, h) * 0.07;
-  var cx = w * 0.6, cy = h * 0.06;
+  var cx = w * 0.53, cy = h * 0.06;
   var g = ctx.createRadialGradient(cx, cy, r * 0.1, cx, cy, r);
   g.addColorStop(0, "#ffe9a8");
   g.addColorStop(0.35, "#ffb347");
