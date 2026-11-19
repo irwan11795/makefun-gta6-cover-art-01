@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Cover Studio — GTA-style cover art maker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">★</span>
+    <div>
+      <h1>VICE COVER STUDIO</h1>
+      <p>Turn any photo into poster-style cover art — offline, on your machine.</p>
+    </div>
+  </div>
+  <div class="privacy-chip">Photos stay on your machine — nothing is uploaded.</div>
+</header>
+
+<main class="workspace">
+  <section class="controls" aria-label="Cover controls">
+    <div class="group">
+      <h2>1 · Add photos</h2>
+      <label class="dropzone" id="dropZone">
+        <span class="drop-title">Drop photos here</span>
+        <span class="drop-sub">or click to choose from your machine</span>
+        <input type="file" id="photoInput" accept="image/*" multiple hidden>
+      </label>
+      <div class="sample-row" id="sampleRow">
+        <span class="sample-label">Try a sample:</span>
+        <button type="button" class="sample-btn" data-sample="messi" id="sample-messi">Messi</button>
+        <button type="button" class="sample-btn" data-sample="ronaldo" id="sample-ronaldo">Ronaldo</button>
+        <button type="button" class="sample-btn" data-sample="taylor" id="sample-taylor">Taylor Swift</button>
+        <button type="button" class="sample-btn" data-sample="johnson" id="sample-johnson">D. Johnson</button>
+      </div>
+      <p class="hint">One photo can fill every panel, or give each panel its own photo.</p>
+    </div>
+
+    <div class="group">
+      <h2>2 · Layout</h2>
+      <div class="btn-row" id="layoutRow">
+        <button type="button" class="pill active" data-layout="hero" id="layout-hero">Hero + 2 panels</button>
+        <button type="button" class="pill" data-layout="columns" id="layout-columns">3 columns</button>
+        <button type="button" class="pill" data-layout="grid" id="layout-grid">Grid 2 × 2</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <h2>3 · Colour grade</h2>
+      <div class="btn-row" id="gradeRow">
+        <button type="button" class="pill active" data-grade="sunset" id="grade-sunset">Sunset</button>
+        <button type="button" class="pill" data-grade="neon" id="grade-neon">Neon</button>
+        <button type="button" class="pill" data-grade="noir" id="grade-noir">Noir</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <h2>4 · Caption</h2>
+      <label class="field-label" for="captionInput">Big caption</label>
+      <input type="text" id="captionInput" value="VICE CITY" maxlength="24" autocomplete="off">
+      <label class="field-label" for="subInput">Sub-caption</label>
+      <input type="text" id="subInput" value="Neon nights, palm dreams." maxlength="60" autocomplete="off">
+      <p class="hint">You can also click the caption right on the cover and type there.</p>
+    </div>
+
+    <div class="group">
+      <h2>5 · Selected panel</h2>
+      <p class="hint" id="selectedPanelLabel">Panel 1 of 3 — click a panel on the cover to select it, then drag it to move the photo.</p>
+      <label class="field-label" for="panelPhoto">Photo in this panel</label>
+      <select id="panelPhoto"></select>
+      <label class="field-label" for="panelZoom">Zoom <span id="zoomValue">100%</span></label>
+      <input type="range" id="panelZoom" min="100" max="300" value="100">
+      <div class="btn-row">
+        <button type="button" class="pill" id="panelFlip">Flip photo</button>
+        <button type="button" class="pill" id="fillAll">Fill all panels with this photo</button>
+        <button type="button" class="pill" id="resetCrop">Reset crop</button>
+      </div>
+    </div>
+
+    <div class="group export-group">
+      <h2>6 · Export PNG</h2>
+      <div class="export-row">
+        <button type="button" class="export-btn" id="export-1080x1080">1080 × 1080<br><span>Square post</span></button>
+        <button type="button" class="export-btn" id="export-1080x1350">1080 × 1350<br><span>Portrait post</span></button>
+        <button type="button" class="export-btn" id="export-1920x1080">1920 × 1080<br><span>Wide cover</span></button>
+      </div>
+      <p class="hint">One click, photo to PNG. The full-resolution file downloads straight to your machine.</p>
+      <p class="status" id="exportStatus" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="stage" aria-label="Live cover preview">
+    <div class="cover-frame">
+      <div class="cover" id="coverPreview">
+        <div class="sun-disc" aria-hidden="true"></div>
+        <div class="grade-overlay" id="gradeOverlay" aria-hidden="true"></div>
+        <div class="diagonal-strip" aria-hidden="true"></div>
+        <div class="caption-block">
+          <h2 class="cover-title" id="coverTitle" contenteditable="true" spellcheck="false">VICE CITY</h2>
+          <p class="cover-sub" id="coverSub" contenteditable="true" spellcheck="false">Neon nights, palm dreams.</p>
+        </div>
+        <div class="cover-badge" aria-hidden="true">★ VICE ★</div>
+      </div>
+    </div>
+    <p class="stage-note">Live preview — drag any panel photo to reposition it. What you see is what the PNG gets.</p>
+  </section>
+</main>
+
+<footer class="credits">
+  <p><strong>Photos stay on your machine — nothing is uploaded.</strong> Your photos are read locally in your browser and never leave your device.</p>
+  <p>Sample photos (built-in only — the app accepts any photo of yours): Lionel Messi, CC BY-SA 3.0, © Кирилл Венедиктов / soccer.ru · Cristiano Ronaldo, CC BY-SA 3.0, © Анна Нэсси / soccer.ru · Taylor Swift, CC BY 3.0, © iHeartRadioCA · Dwayne Johnson, CC BY-SA 2.0, © Eva Rinaldi. All via Wikimedia Commons.</p>
+  <p>Lettering: Anton, SIL Open Font License 1.1 (see app/fonts/OFL.txt). Original design — no Rockstar Games logo, artwork or font.</p>
+</footer>
+
+<script src="src/app.js"></script>
+</body>
+</html>
